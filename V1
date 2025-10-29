@@ -1,49 +1,74 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plato en AR - Demo</title>
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: #f0f0f0;
-      font-family: sans-serif;
-    }
-    model-viewer {
-      width: 300px;
-      height: 300px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    h1 {
-      position: absolute;
-      top: 20px;
-      text-align: center;
-      width: 100%;
-    }
-  </style>
+    <title>Mi Menú VR Interactivo</title>
+    <meta name="description" content="Menú interactivo en WebXR usando A-Frame">
+    
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script>
+        AFRAME.registerComponent('menu-button', {
+            init: function () {
+                const el = this.el;
+                const link = el.getAttribute('data-link');
+                el.addEventListener('mouseenter', () => { el.setAttribute('scale', '1.2 1.2 1.2'); });
+                el.addEventListener('mouseleave', () => { el.setAttribute('scale', '1 1 1'); });
+                el.addEventListener('click', () => { window.location.href = link; });
+            }
+        });
+    </script>
 </head>
 <body>
+    <a-scene background="color: #282c34">
 
-<h1>Escanea el QR y mira tu plato en AR</h1>
+        <a-entity id="cameraRig" position="0 1.6 0">
+            <a-entity id="head" camera look-controls>
+                <a-entity 
+                    cursor="fuse: true; fuseTimeout: 1000;"
+                    position="0 0 -1"
+                    geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
+                    material="color: white; shader: flat; opacity: 0.75;">
+                </a-entity>
+            </a-entity>
+        </a-entity>
 
-<!-- Modelo 3D sencillo -->
-<model-viewer
-  src="https://modelviewer.dev/shared-assets/models/Meal.glb"
-  alt="Plato de ejemplo"
-  ar
-  ar-modes="webxr scene-viewer quick-look"
-  camera-controls
-  auto-rotate
-  background-color="#f0f0f0">
-</model-viewer>
 
+        <a-gltf-model 
+            id="mi-modelo-central"
+            src="pescado.glb" 
+            position="-4 2.5 -2.5"   scale="2.5 2.5 2.5"     rotation="0 45 0">
+        </a-gltf-model>
+
+
+        <a-text value="MENU PRINCIPAL" color="white" position="-1.2 3.5 -4"></a-text> <a-sphere
+            position="-3 1.5 -4"  radius="0.3"
+            color="#E63946"
+            shadow
+            menu-button
+            data-link="https://www.google.com">
+            <a-text value="Google" align="center" color="white" position="0 -0.5 0"></a-text>
+        </a-sphere>
+
+        <a-sphere
+            position="0 0.2 -4"  radius="0.3"
+            color="#457B9D"
+            shadow
+            menu-button
+            data-link="https://sketchfab.com/feed">
+            <a-text value="Modelos 3D" align="center" color="white" position="0 -0.5 0"></a-text>
+        </a-sphere>
+
+        <a-sphere
+            position="3 1.5 -4"   radius="0.3"
+            color="#A8DADC"
+            shadow
+            menu-button
+            data-link="https://aframe.io">
+             <a-text value="A-Frame" align="center" color="#1D3557" position="0 -0.5 0"></a-text>
+        </a-sphere>
+
+        <a-plane position="0 0 -5" rotation="-90 0 0" width="15" height="15" color="#4F5D75" shadow></a-plane>
+        <a-sky color="#373F51"></a-sky>
+
+    </a-scene>
 </body>
 </html>
