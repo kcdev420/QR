@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plato en AR - Demo</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #f0f0f0;
+      font-family: sans-serif;
+    }
+    model-viewer {
+      width: 300px;
+      height: 300px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    h1 {
+      position: absolute;
+      top: 20px;
+      text-align: center;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Escanea el QR y mira tu plato en AR</h1>
+
+<!-- Modelo 3D sencillo -->
+<model-viewer
+  src="https://modelviewer.dev/shared-assets/models/Meal.glb"
+  alt="Plato de ejemplo"
+  ar
+  ar-modes="webxr scene-viewer quick-look"
+  camera-controls
+  auto-rotate
+  background-color="#f0f0f0">
+</model-viewer>
+
+</body>
+</html>
